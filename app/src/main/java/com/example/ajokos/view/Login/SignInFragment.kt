@@ -1,35 +1,52 @@
 package com.example.ajokos.view.Login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.ajokos.R
+import com.example.ajokos.databinding.FragmentSignInBinding
+import com.example.ajokos.model.database.AppDatabase
+import com.example.ajokos.viewmodel.UserRepository
+import com.example.ajokos.viewmodel.UserViewModel
+import com.example.ajokos.viewmodel.UserViewModelFactory
 
 class SignInFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    private var _binding: FragmentSignInBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+    ): View {
+        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val app = requireActivity().application
+        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
+        val repository = UserRepository(userDao)
+        val viewModel = ViewModelProvider(
+            this,
+            UserViewModelFactory(repository)
+        )[UserViewModel::class.java]
+        binding.btnLogin.setOnClickListener {
+            // Nanti diisi logic login
+        }
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignInFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        // Klik "Belum punya akun? Daftar"
+        binding.tvToSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

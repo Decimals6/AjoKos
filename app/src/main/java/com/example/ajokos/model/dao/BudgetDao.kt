@@ -7,14 +7,14 @@ import com.example.ajokos.model.data.Budget
 @Dao
 interface BudgetDao {
     @Insert
-    fun insert(budget: Budget)
+    suspend fun insert(budget: Budget)
 
     @Update
-    fun update(budget: Budget)
+    suspend fun update(budget: Budget)
 
     @Delete
-    fun delete(budget: Budget)
+    suspend fun delete(budget: Budget)
 
     @Query("SELECT * FROM Budget WHERE userId = :userId")
-    fun getAllBudgets(userId: Int): LiveData<List<Budget>>
+    suspend fun getAllBudgets(userId: Int): LiveData<List<Budget>>
 }
