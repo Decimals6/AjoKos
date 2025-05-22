@@ -10,13 +10,15 @@ import com.example.ajokos.view.Main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_login)
+        sessionManager = SessionManager(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
-        if (SessionManager.isLoggedIn(this)) {
+        if (sessionManager.isLogin()) {
             // Sudah login, langsung ke MainActivity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
