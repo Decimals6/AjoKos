@@ -7,14 +7,14 @@ import com.example.ajokos.model.data.Expenses
 @Dao
 interface ExpensesDao {
     @Insert
-    suspend fun insert(expense: Expenses)
+    fun insert(expense: Expenses)
 
     @Delete
-    suspend fun delete(expense: Expenses)
+    fun delete(expense: Expenses)
 
     @Query("SELECT * FROM Expenses WHERE userId = :userId ORDER BY date DESC")
-    suspend fun getExpensesByUser(userId: Int): LiveData<List<Expenses>>
+    fun getExpensesByUser(userId: Int): LiveData<List<Expenses>>
 
     @Query("SELECT * FROM Expenses WHERE budgetId = :budgetId ORDER BY date DESC")
-    suspend fun getExpensesByBudget(budgetId: Int): LiveData<List<Expenses>>
+    fun getExpensesByBudget(budgetId: Int): LiveData<List<Expenses>>
 }

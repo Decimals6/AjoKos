@@ -28,16 +28,16 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val app = requireActivity().application
-        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
-        val repository = UserRepository(userDao)
-        val viewModel = ViewModelProvider(
-            this,
-            UserViewModelFactory(repository)
-        )[UserViewModel::class.java]
-        binding.btnLogin.setOnClickListener {
-            // Nanti diisi logic login
-        }
+//        val app = requireActivity().application
+//        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
+//        val repository = UserRepository(userDao)
+//        val viewModel = ViewModelProvider(
+//            this,
+//            UserViewModelFactory(repository)
+//        )[UserViewModel::class.java]
+//        binding.btnLogin.setOnClickListener {
+//            // Nanti diisi logic login
+//        }
 
         // Klik "Belum punya akun? Daftar"
         binding.tvToSignUp.setOnClickListener {

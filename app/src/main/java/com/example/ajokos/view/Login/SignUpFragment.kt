@@ -32,37 +32,11 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val app = requireActivity().application
-        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
-        val repository = UserRepository(userDao) // <-- ini perlu kamu tambahkan
-        val factory = UserViewModelFactory(repository)
-        val viewModel = ViewModelProvider(
-            this,
-            UserViewModelFactory(repository)
-        )[UserViewModel::class.java]
 
-        binding.btnRegister.setOnClickListener {
-            val username = binding.txtUsername.text.toString()
-            val name = binding.txtName.text.toString()
-            val password = binding.txtPassword.text.toString()
-
-            if (username.isBlank() || name.isBlank() || password.isBlank()) {
-                Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                val newUser = User(username = username, name = name, password = password)
-                viewModel.register(newUser) { success, message ->
-                    requireActivity().runOnUiThread {
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        if (success) {
-                            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-                        }
-                    }
-                }
-            }
-        }
         binding.tvToSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
+        binding.btnRegister.setOnClickListener {
         }
     }
 
