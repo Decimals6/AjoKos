@@ -1,6 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/nav_expense">
 
+    <fragment
+        android:id="@+id/nav_expense"
+        android:name="com.example.ajokos.view.Main.ExpenseFragment"
+        android:label="Expense"
+        tools:layout="@layout/fragment_expense" />
+
+    <fragment
+        android:id="@+id/nav_budget"
+        android:name="com.example.ajokos.view.Main.BudgetFragment"
+        android:label="Budget"
+        tools:layout="@layout/fragment_budget" />
+
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="com.example.ajokos.view.Main.ReportFragment"
+        android:label="Report"
+        tools:layout="@layout/fragment_report" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.ajokos.view.Main.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
