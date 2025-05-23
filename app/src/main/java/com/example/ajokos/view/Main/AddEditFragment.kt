@@ -21,7 +21,7 @@ class AddEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_edit, container, false)
+        return inflater.inflate(R.layout.fragment_add_edit_budget, container, false)
     }
 
     companion object {

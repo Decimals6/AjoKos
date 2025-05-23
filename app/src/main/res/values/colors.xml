@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bottom_nav_background">#F0E6BE</color>
+    <color name="bottom_nav_selected">#08454C</color>
+    <color name="bottom_nav_unselected">#888888</color>
+    <color name="card">#EBDE8A</color>
 </resources>

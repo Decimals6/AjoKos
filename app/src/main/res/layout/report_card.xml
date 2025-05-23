@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="@color/card">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Nama Budget -->
+        <TextView
+            android:id="@+id/tvReportBudgetName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Food Budget"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#08454C"
+            android:paddingBottom="8dp"/>
+
+        <!-- Progress info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvReportBudgetLeft"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="IDR 700.000"
+                android:textColor="#08454C"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvReportBudgetTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IDR 1.000.000"
+                android:textColor="#08454C"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressReport"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:progress="70"
+            android:max="100"
+            android:progressDrawable="@drawable/bg_progress_bar_budget"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Budget Left Text -->
+        <TextView
+            android:id="@+id/tvReportBudgetRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budget Left: IDR 700.000"
+            android:textColor="#08454C"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
