@@ -9,12 +9,12 @@ interface BudgetDao {
     @Insert
     fun insert(budget: Budget)
 
-    @Update
-    fun update(budget: Budget)
+    @Query("UPDATE Budget SET name=:name, budget=:budget WHERE id = :id")
+    fun update(name:String, budget:Int, id:Int)
 
     @Delete
     fun delete(budget: Budget)
 
     @Query("SELECT * FROM Budget WHERE userId = :userId")
-    fun getAllBudgets(userId: Int): LiveData<List<Budget>>
+    fun getAllBudgets(userId: Int): List<Budget>
 }

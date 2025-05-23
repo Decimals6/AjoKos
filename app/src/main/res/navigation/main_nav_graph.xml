@@ -14,7 +14,14 @@
         android:id="@+id/nav_budget"
         android:name="com.example.ajokos.view.Main.BudgetFragment"
         android:label="Budget"
-        tools:layout="@layout/fragment_budget" />
+        tools:layout="@layout/fragment_budget" >
+        <action
+            android:id="@+id/actionToAddBudgetFragment"
+            app:destination="@id/addBudgetFragment" />
+        <action
+            android:id="@+id/actionToEditBudgetFragment"
+            app:destination="@id/editBudgetFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_report"
@@ -27,4 +34,19 @@
         android:name="com.example.ajokos.view.Main.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/addBudgetFragment"
+        android:name="com.example.ajokos.view.Main.AddBudgetFragment"
+        android:label="AddBudgetFragment"
+        tools:layout="@layout/fragment_add_edit_budget"/>
+    <fragment
+        android:id="@+id/editBudgetFragment"
+        android:name="com.example.ajokos.view.Main.EditBudgetFragment"
+        android:label="EditBudgetFragment"
+        tools:layout="@layout/fragment_add_edit_budget">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

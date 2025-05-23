@@ -1,33 +1,46 @@
 package com.example.ajokos.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.*
+import androidx.room.Database
+import com.example.ajokos.model.dao.BudgetDao
 import com.example.ajokos.model.data.Budget
+import com.example.ajokos.model.database.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class BudgetViewModel(private val repository: BudgetRepository) : ViewModel() {
-    fun getAllBudgets(userId: Int): LiveData<List<Budget>> {
-        return repository.getAllBudgets(userId)
-    }
+class BudgetViewModel(application: Application) : AndroidViewModel(application),
+    CoroutineScope {
+    private val budgetDao = AppDatabase.getDatabase(application).budgetDao()
+    val budgetLD = MutableLiveData<List<Budget>>()
+    val budgetLoadErrorLD = MutableLiveData<Boolean>()
+    val loadingLD = MutableLiveData<Boolean>()
+    private var job = Job()
 
-    fun insert(budget: Budget) = viewModelScope.launch {
-        repository.insert(budget)
-    }
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 
-    fun update(budget: Budget) = viewModelScope.launch {
-        repository.update(budget)
-    }
+    fun getBudget(userId: Int) {
+        loadingLD.value = true
+        budgetLoadErrorLD.value = false
+        launch {
+            val db = AppDatabase.getDatabase(
+                getApplication()
+            )
 
-    fun delete(budget: Budget) = viewModelScope.launch {
-        repository.delete(budget)
-    }
-}
-
-class BudgetViewModelFactory(private val repository: BudgetRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(BudgetViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return BudgetViewModel(repository) as T
+            budgetLD.postValue(db.budgetDao().getAllBudgets(userId))
+            loadingLD.postValue(false)
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+    fun addBudget(budget: Budget){
+        viewModelScope.launch(Dispatchers.IO) {
+            budgetDao.insert(budget)
+        }
     }
 }
+
+

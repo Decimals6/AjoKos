@@ -13,7 +13,6 @@ import com.example.ajokos.R
 import com.example.ajokos.databinding.FragmentSignUpBinding
 import com.example.ajokos.model.data.User
 import com.example.ajokos.model.database.AppDatabase
-import com.example.ajokos.viewmodel.UserRepository
 import com.example.ajokos.viewmodel.UserViewModel
 
 

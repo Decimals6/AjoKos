@@ -11,6 +11,7 @@
     card_view:cardBackgroundColor="#E5DDAE">
 
     <LinearLayout
+        android:id="@+id/budgetObject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

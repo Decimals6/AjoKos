@@ -15,7 +15,6 @@ import com.example.ajokos.databinding.FragmentSignInBinding
 import com.example.ajokos.model.SessionManager
 import com.example.ajokos.model.database.AppDatabase
 import com.example.ajokos.view.Main.MainActivity
-import com.example.ajokos.viewmodel.UserRepository
 import com.example.ajokos.viewmodel.UserViewModel
 
 class SignInFragment : Fragment() {
