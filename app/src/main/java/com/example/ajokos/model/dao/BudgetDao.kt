@@ -12,6 +12,9 @@ interface BudgetDao {
     @Query("UPDATE Budget SET name=:name, budget=:budget WHERE id = :id")
     fun update(name:String, budget:Int, id:Int)
 
+    @Query("SELECT * FROM Budget WHERE id= :id")
+    fun selectBudget(id:Int): Budget
+
     @Delete
     fun delete(budget: Budget)
 

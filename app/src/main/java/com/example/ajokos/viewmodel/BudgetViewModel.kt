@@ -16,6 +16,7 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
     CoroutineScope {
     private val budgetDao = AppDatabase.getDatabase(application).budgetDao()
     val budgetLD = MutableLiveData<List<Budget>>()
+    val selectedBudget = MutableLiveData<Budget>()
     val budgetLoadErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
     private var job = Job()
@@ -33,6 +34,12 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
 
             budgetLD.postValue(db.budgetDao().getAllBudgets(userId))
             loadingLD.postValue(false)
+        }
+    }
+    fun getBudgetById(id:Int) {
+        launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            selectedBudget.postValue(db.budgetDao().selectBudget(id))
         }
     }
 

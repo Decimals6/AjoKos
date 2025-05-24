@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.ajokos.R
@@ -36,9 +37,13 @@ class EditBudgetFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(BudgetViewModel::class.java)
+        binding.txtTitle.text = "Edit Budget"
+        binding.btnAddBudget.text = "Save Change"
 
         // retrieve the argument from clicked+ imgEdit
         val id = EditBudgetFragmentArgs.fromBundle(requireArguments()).id
+        viewModel.getBudgetById(id)
+        observeViewModel()
         // pass the uuid argument to DetailViewModel (fetch function)
 //        viewModel.(id)
 //        observeViewModel()
@@ -51,6 +56,16 @@ class EditBudgetFragment : Fragment() {
 //            Navigation.findNavController(it).popBackStack()
 //        }
 
+        binding.btnBack.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
+
+    }
+    fun observeViewModel() {
+        viewModel.selectedBudget.observe(viewLifecycleOwner, Observer {
+            binding.txtBudgetName.setText(it.name)
+            binding.txtBudgetAmount.setText(it.budget.toString())
+        })
     }
 
     companion object {

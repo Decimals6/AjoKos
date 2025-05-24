@@ -44,14 +44,10 @@ class BudgetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         viewModel = ViewModelProvider(this)[BudgetViewModel::class.java]
+        val sessionManager = SessionManager(requireContext())
+        val userId = sessionManager.getUserId()
 
-        userViewModel.loggedInUserId.observe(viewLifecycleOwner) { idUser ->
-            if (idUser != null) {
-                viewModel.getBudget(idUser)
-            } else {
-                Toast.makeText(requireContext(), "User ID tidak ditemukan", Toast.LENGTH_SHORT).show()
-            }
-        }
+        viewModel.getBudget(userId)
 
         binding.recviewBudget.layoutManager = LinearLayoutManager(context)
         binding.recviewBudget.adapter = budgetListAdapter

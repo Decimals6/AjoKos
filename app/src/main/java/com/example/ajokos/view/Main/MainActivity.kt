@@ -1,6 +1,7 @@
 package com.example.ajokos.view.Main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -35,6 +36,19 @@ class MainActivity : AppCompatActivity() {
 
         if (navController != null) {
             binding.bottomNavBar.setupWithNavController(navController)
+
+            // Tambahkan listener untuk hide/show bottom nav bar
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.addBudgetFragment, R.id.editBudgetFragment -> {
+                        binding.bottomNavBar.visibility = View.GONE
+                    }
+
+                    else -> {
+                        binding.bottomNavBar.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
     }

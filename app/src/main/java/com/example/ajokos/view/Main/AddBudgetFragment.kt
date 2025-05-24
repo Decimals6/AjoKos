@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.ajokos.R
 import com.example.ajokos.databinding.FragmentAddEditBudgetBinding
+import com.example.ajokos.model.SessionManager
 import com.example.ajokos.model.data.Budget
 import com.example.ajokos.model.data.User
 import com.example.ajokos.viewmodel.BudgetViewModel
@@ -20,6 +21,7 @@ class AddBudgetFragment : Fragment() {
     private lateinit var binding: FragmentAddEditBudgetBinding
     private lateinit var viewModel: BudgetViewModel
     private lateinit var userViewModel: UserViewModel
+    private var loggedInUserId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,36 +40,40 @@ class AddBudgetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[BudgetViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        binding.btnAddBudget.setOnClickListener {
-            userViewModel.loggedInUserId.observe(viewLifecycleOwner) { idUser ->
-                if (idUser != null) {
-                    val name = binding.txtBudgetName.text.toString()
-                    val budget = binding.txtBudgetAmount.text.toString().toIntOrNull()
-                    val budgetLeft = binding.txtBudgetAmount.text.toString().toIntOrNull()
-                    val userid = idUser
 
-                    if (name.isBlank() || budget == null || budgetLeft == null){
-                        Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT).show()
-
-                    } else {
-                        val budget = Budget(
-                            name = name,
-                            budget = budget,
-                            budgetLeft = budgetLeft,
-                            userId = userid
-                        )
-
-                        viewModel.addBudget(budget)
-                        Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
-                        Navigation.findNavController(it).popBackStack()
-                    }
-
-                } else {
-                    Toast.makeText(requireContext(), "User ID tidak ditemukan", Toast.LENGTH_SHORT).show()
-                }
-            }
+        userViewModel.loggedInUserId.observe(viewLifecycleOwner) { idUser ->
+            loggedInUserId = idUser
         }
 
+        binding.btnAddBudget.setOnClickListener {
+            val name = binding.txtBudgetName.text.toString()
+            val budget = binding.txtBudgetAmount.text.toString().toIntOrNull()
+            val budgetLeft = budget
+            val sessionManager = SessionManager(requireContext())
+            val userId = sessionManager.getUserId()
+
+//            println(userId)
+//            Toast.makeText(requireContext(), "User ID = " + userId
+//                , Toast.LENGTH_SHORT).show()
+
+            if (name.isBlank() || budget == null || userId == null) {
+                Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT).show()
+            } else {
+                val budgetEntity = Budget(
+                    name = name,
+                    budget = budget,
+                    budgetLeft = budgetLeft!!,
+                    budgetSpend = 0,
+                    userId = userId
+                )
+                viewModel.addBudget(budgetEntity)
+                Toast.makeText(requireContext(), "Data added", Toast.LENGTH_LONG).show()
+                Navigation.findNavController(it).popBackStack() // lebih clean
+            }
+        }
+        binding.btnBack.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
     }
 
     companion object {
