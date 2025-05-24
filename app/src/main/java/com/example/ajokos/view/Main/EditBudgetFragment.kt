@@ -68,18 +68,6 @@ class EditBudgetFragment : Fragment() {
 //                " budget: " + budget.budget.toString() + " budgetleft: " + budget.budgetLeft.toString()
 //                + " name: " + budget.name + " budgetspend: " + budget.budgetSpend.toString(), Toast.LENGTH_LONG).show()
         }
-        // pass the uuid argument to DetailViewModel (fetch function)
-//        viewModel.(id)
-//        observeViewModel()
-//        binding.btnAdd.setOnClickListener {
-//            val radio =
-//                view.findViewById<RadioButton>(binding.radioGroupPriority.checkedRadioButtonId)
-//            viewModel.update(binding.txtTitle.text.toString(),
-//                binding.txtNote.text.toString(), radio.tag.toString().toInt(), uuid)
-//            Toast.makeText(view.context, "Todo updated", Toast.LENGTH_SHORT).show()
-//            Navigation.findNavController(it).popBackStack()
-//        }
-
         binding.btnBack.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }

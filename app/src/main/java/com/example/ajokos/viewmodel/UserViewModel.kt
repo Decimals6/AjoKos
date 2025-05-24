@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ajokos.model.data.User
 import com.example.ajokos.model.database.AppDatabase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class UserViewModel(application: Application) : AndroidViewModel(application) {
+class UserViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
 
 //register
     private val userDao = AppDatabase.getDatabase(application).userDao()
@@ -29,9 +32,15 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val _loggedInUserId = MutableLiveData<Int?>()
     val loggedInUserId: LiveData<Int?> = _loggedInUserId
 
+    val selectedUser = MutableLiveData<User>()
+
+    private var job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 
     fun registerUser(user: User) {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch() {
             val existingUser = userDao.checkUser(user.username)
             if (existingUser != null) {
                 _signupResult.postValue("Username sudah terdaftar")
@@ -42,9 +51,17 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun getUserData(id:Int){
+        launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            selectedUser.postValue(db.userDao().getUserById(id))
+        }
+    }
+
+
 
     fun login(username: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch() {
             val user = userDao.login(username, password)
             if (user != null) {
                 _loggedInUserId.postValue(user.id)
