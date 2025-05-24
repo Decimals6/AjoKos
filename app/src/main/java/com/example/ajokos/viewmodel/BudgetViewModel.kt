@@ -48,6 +48,12 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
             budgetDao.insert(budget)
         }
     }
+    fun updateBudget(vname: String, vbudget: Int, vbudgetLeft: Int, vid: Int){
+        launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            db.budgetDao().update(vname, vbudget, vbudgetLeft,vid)
+        }
+    }
 }
 
 

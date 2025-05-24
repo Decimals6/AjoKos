@@ -12,11 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.ajokos.R
 import com.example.ajokos.databinding.FragmentAddEditBudgetBinding
+import com.example.ajokos.model.data.Budget
 import com.example.ajokos.viewmodel.BudgetViewModel
 
 class EditBudgetFragment : Fragment() {
     private lateinit var binding: FragmentAddEditBudgetBinding
     private lateinit var viewModel: BudgetViewModel
+    private lateinit var budget: Budget
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,28 @@ class EditBudgetFragment : Fragment() {
         val id = EditBudgetFragmentArgs.fromBundle(requireArguments()).id
         viewModel.getBudgetById(id)
         observeViewModel()
+        binding.btnAddBudget.setOnClickListener {
+            val vname = binding.txtBudgetName.text.toString()
+            val vbudget = binding.txtBudgetAmount.text.toString().toInt()
+
+            if (budget.budgetSpend < vbudget){
+                val budgetEntity = Budget(
+                    name = vname,
+                    budget = vbudget,
+                    budgetSpend = budget.budgetSpend,
+                    budgetLeft = vbudget - budget.budgetSpend,
+                    userId = budget.userId
+                )
+                viewModel.updateBudget(budgetEntity.name, budgetEntity.budget, budgetEntity.budgetLeft, budget.id )
+                Toast.makeText(requireContext(), "Data Berhasil diubah", Toast.LENGTH_LONG).show()
+                Navigation.findNavController(it).popBackStack() // lebih clean
+            } else {
+                Toast.makeText(requireContext(), "Nilai Budget Diubah tidak boleh melebihi expenses", Toast.LENGTH_LONG).show()
+            }
+//            Toast.makeText(requireContext(), budget.id.toString() +
+//                " budget: " + budget.budget.toString() + " budgetleft: " + budget.budgetLeft.toString()
+//                + " name: " + budget.name + " budgetspend: " + budget.budgetSpend.toString(), Toast.LENGTH_LONG).show()
+        }
         // pass the uuid argument to DetailViewModel (fetch function)
 //        viewModel.(id)
 //        observeViewModel()
@@ -63,6 +87,7 @@ class EditBudgetFragment : Fragment() {
     }
     fun observeViewModel() {
         viewModel.selectedBudget.observe(viewLifecycleOwner, Observer {
+            budget = it
             binding.txtBudgetName.setText(it.name)
             binding.txtBudgetAmount.setText(it.budget.toString())
         })

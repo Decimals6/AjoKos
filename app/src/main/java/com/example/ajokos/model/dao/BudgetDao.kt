@@ -9,8 +9,8 @@ interface BudgetDao {
     @Insert
     fun insert(budget: Budget)
 
-    @Query("UPDATE Budget SET name=:name, budget=:budget WHERE id = :id")
-    fun update(name:String, budget:Int, id:Int)
+    @Query("UPDATE Budget SET name=:vname, budget=:vbudget, budgetLeft=:vbudgetLeft WHERE id = :vid")
+    fun update(vname: String, vbudget: Int, vbudgetLeft: Int, vid: Int)
 
     @Query("SELECT * FROM Budget WHERE id= :id")
     fun selectBudget(id:Int): Budget
