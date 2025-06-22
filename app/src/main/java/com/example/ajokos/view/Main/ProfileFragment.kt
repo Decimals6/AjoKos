@@ -86,8 +86,7 @@ class ProfileFragment : Fragment() {
     fun observeViewModel(){
         userViewModel.selectedUser.observe(viewLifecycleOwner, Observer {
             user = it
-            binding.tvFirstName.setText(it.fname)
-            binding.tvLastName.setText(it.lname)
+            binding.userModel = it
         })
     }
 

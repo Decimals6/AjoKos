@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.example.ajokos.viewmodel.UserViewModel" />
+        <variable
+            name="userModel"
+            type="com.example.ajokos.model.data.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +34,7 @@
             android:id="@+id/tvFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Nama Depan: John"
+            android:text="@{userModel.fname}"
             android:textSize="16sp"
             android:textColor="#000000"
             app:layout_constraintTop_toBottomOf="@id/logoBackground"
@@ -44,7 +47,7 @@
             android:id="@+id/tvLastName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Nama Belakang: Doe"
+            android:text="@{userModel.lname}"
             android:textSize="16sp"
             android:textColor="#000000"
             app:layout_constraintTop_toBottomOf="@id/tvFirstName"
