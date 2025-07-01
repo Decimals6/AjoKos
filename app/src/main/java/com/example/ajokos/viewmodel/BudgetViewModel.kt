@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import kotlin.coroutines.CoroutineContext
 
 class BudgetViewModel(application: Application) : AndroidViewModel(application),
@@ -17,6 +18,7 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
     private val budgetDao = AppDatabase.getDatabase(application).budgetDao()
     val budgetLD = MutableLiveData<List<Budget>>()
     val selectedBudget = MutableLiveData<Budget>()
+    val availableMonthsLD = MutableLiveData<List<Int>>()
     val budgetLoadErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
     private var job = Job()
@@ -36,6 +38,24 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
             loadingLD.postValue(false)
         }
     }
+
+    fun getCurrentMonthYear(): Pair<Int, Int> {
+        val cal = Calendar.getInstance()
+        val month = cal.get(Calendar.MONTH) + 1 // Januari = 0
+        val year = cal.get(Calendar.YEAR)
+        return Pair(month, year)
+    }
+
+    fun getBudgetsThisMonth(userId: Int) {
+        val (month, year) = getCurrentMonthYear()
+        launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            val budgets = db.budgetDao().getBudgetsThisMonth(userId, month, year)
+            budgetLD.postValue(budgets)
+        }
+    }
+
+
     fun getBudgetById(id:Int) {
         launch {
             val db = AppDatabase.getDatabase(getApplication())
@@ -48,10 +68,24 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
             budgetDao.insert(budget)
         }
     }
-    fun updateBudget(vname: String, vbudget: Int, vbudgetLeft: Int, vid: Int){
+    fun updateBudget(vname: String, vbudget: Int, vbudgetLeft: Int, vbudgetSpend: Int, vid: Int){
         launch {
             val db = AppDatabase.getDatabase(getApplication())
-            db.budgetDao().update(vname, vbudget, vbudgetLeft,vid)
+            db.budgetDao().update(vname, vbudget, vbudgetLeft, vbudgetSpend, vid)
+        }
+    }
+
+    fun getBudgetsByMonth(userId: Int, month: Int) {
+        launch {
+            val budgets = budgetDao.getBudgetByMonth(userId, month)
+            budgetLD.postValue(budgets)
+        }
+    }
+
+    fun fetchAvailableMonths(userId: Int) {
+        launch {
+            val result = budgetDao.getAvailableMonths(userId)
+            availableMonthsLD.postValue(result)
         }
     }
 }

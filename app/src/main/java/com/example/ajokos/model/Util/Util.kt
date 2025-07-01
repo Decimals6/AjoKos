@@ -20,6 +20,13 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
     }
 }
 
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Budget ADD COLUMN month INTEGER DEFAULT 1 NOT NULL")
+        database.execSQL("ALTER TABLE Budget ADD COLUMN year INTEGER DEFAULT 2025 NOT NULL")
+    }
+}
+
 //val MIGRATION_2_3 = object : Migration(2, 3) {
 //    override fun migrate(database: SupportSQLiteDatabase) {
 //        database.execSQL(

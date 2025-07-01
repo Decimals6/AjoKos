@@ -42,6 +42,10 @@ class EditBudgetFragment : Fragment() {
         binding.txtTitle.text = "Edit Budget"
         binding.btnAddBudget.text = "Save Change"
 
+        val currentDate = java.util.Calendar.getInstance()
+        val currentMonth = currentDate.get(java.util.Calendar.MONTH) + 1 // +1 karena Januari = 0
+        val currentYear = currentDate.get(java.util.Calendar.YEAR)
+
         // retrieve the argument from clicked+ imgEdit
         val id = EditBudgetFragmentArgs.fromBundle(requireArguments()).id
         viewModel.getBudgetById(id)
@@ -56,9 +60,11 @@ class EditBudgetFragment : Fragment() {
                     budget = vbudget,
                     budgetSpend = budget.budgetSpend,
                     budgetLeft = vbudget - budget.budgetSpend,
-                    userId = budget.userId
+                    userId = budget.userId,
+                    month = currentMonth,
+                    year = currentYear
                 )
-                viewModel.updateBudget(budgetEntity.name, budgetEntity.budget, budgetEntity.budgetLeft, budget.id )
+                viewModel.updateBudget(budgetEntity.name, budgetEntity.budget, budgetEntity.budgetLeft, budgetEntity.budgetSpend, budget.id )
                 Toast.makeText(requireContext(), "Data Berhasil diubah", Toast.LENGTH_LONG).show()
                 Navigation.findNavController(it).popBackStack() // lebih clean
             } else {

@@ -23,8 +23,7 @@ class BudgetFragment : Fragment() {
     private lateinit var binding : FragmentBudgetBinding
     private lateinit var userViewModel: UserViewModel
     private lateinit var viewModel: BudgetViewModel
-    private lateinit var sessionManager: SessionManager
-    private val budgetListAdapter  = BudgetAdapter(arrayListOf())
+    private val budgetListAdapter = BudgetAdapter(arrayListOf(), readonlyMode = false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,24 +41,35 @@ class BudgetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         viewModel = ViewModelProvider(this)[BudgetViewModel::class.java]
         val sessionManager = SessionManager(requireContext())
         val userId = sessionManager.getUserId()
 
-        viewModel.getBudget(userId)
+        // Panggil data budget bulan ini
+        viewModel.getBudgetsThisMonth(userId)
+        viewModel.fetchAvailableMonths(userId)
 
+        // Atur layout dan adapter
         binding.recviewBudget.layoutManager = LinearLayoutManager(context)
         binding.recviewBudget.adapter = budgetListAdapter
 
+        // Tombol tambah budget
         binding.fabAddBudget.setOnClickListener {
             val action = BudgetFragmentDirections.actionToAddBudgetFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
-        observeViewModel()
+        // Tombol lihat history
+        binding.btnHistory.setOnClickListener {
+            val action = BudgetFragmentDirections.actionToHistoryBudgetFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
+        observeViewModel()
     }
+
 
     fun observeViewModel() {
         viewModel.budgetLD.observe(viewLifecycleOwner, Observer {
@@ -73,20 +83,6 @@ class BudgetFragment : Fragment() {
                 binding.txtError.visibility = View.GONE
             }
         })
-//        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
-//            if(it == false) {
-//                binding.progressLoad?.visibility = View.GONE
-//            } else {
-//                binding.progressLoad?.visibility = View.VISIBLE
-//            }
-//        })
-//        viewModel.todoLoadErrorLD.observe(viewLifecycleOwner, Observer {
-//            if(it == false) {
-//                binding.txtError?.visibility = View.GONE
-//            } else {
-//                binding.txtError?.visibility = View.VISIBLE
-//            }
-//        })
     }
 
     companion object {

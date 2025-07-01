@@ -8,7 +8,7 @@
     android:padding="12dp"
     android:paddingBottom="72dp">
 
-    <!-- Judul Tetap di Atas -->
+    <!-- Judul -->
     <TextView
         android:id="@+id/tvBudgetTitle"
         android:layout_width="0dp"
@@ -19,35 +19,51 @@
         android:textColor="#08454C"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/btnHistory"
+        android:layout_marginEnd="8dp"/>
 
-    <!-- RecyclerView untuk Budget -->
+    <!-- Tombol History -->
+    <ImageButton
+        android:id="@+id/btnHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Lihat Riwayat"
+        android:src="@drawable/baseline_history_24"
+        app:layout_constraintTop_toTopOf="@id/tvBudgetTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvBudgetTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="#08454C" />
+
+    <!-- Text Error -->
+    <TextView
+        android:id="@+id/txtError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Budget still empty."
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvBudgetTitle"
+        app:layout_constraintBottom_toTopOf="@+id/recviewBudget"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recviewBudget"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@id/tvBudgetTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBudgetTitle"
+        app:layout_constraintBottom_toTopOf="@+id/fabAddBudget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/txtError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Error"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Floating Action Button Tambah -->
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddBudget"
         android:layout_width="wrap_content"

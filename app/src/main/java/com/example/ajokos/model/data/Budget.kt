@@ -10,5 +10,7 @@ data class Budget(
     val budget: Int,
     val budgetLeft: Int,
     val budgetSpend: Int,
-    val userId: Int
+    val userId: Int,
+    val month: Int,
+    val year: Int
 )

@@ -2,13 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/nav_expense">
+    app:startDestination="@id/actionToHistoryExpensesFragment">
 
     <fragment
-        android:id="@+id/nav_expense"
+        android:id="@+id/actionToHistoryExpensesFragment"
         android:name="com.example.ajokos.view.Main.ExpenseFragment"
         android:label="Expense"
-        tools:layout="@layout/fragment_expense" />
+        tools:layout="@layout/fragment_expense" >
+        <action
+            android:id="@+id/actionToHistoryExpensesFragment"
+            app:destination="@id/historyExpensesFragment" />
+        <action
+            android:id="@+id/actionToAddExpensesFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_budget"
@@ -21,6 +28,9 @@
         <action
             android:id="@+id/actionToEditBudgetFragment"
             app:destination="@id/editBudgetFragment" />
+        <action
+            android:id="@+id/actionToHistoryBudgetFragment"
+            app:destination="@id/historyBudgetFragment" />
     </fragment>
 
     <fragment
@@ -49,4 +59,19 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/historyBudgetFragment"
+        android:name="com.example.ajokos.view.Main.HistoryBudgetFragment"
+        android:label="HistoryBudgetFragment"
+        tools:layout="@layout/fragment_history_budget"/>
+    <fragment
+        android:id="@+id/historyExpensesFragment"
+        android:name="com.example.ajokos.view.Main.HistoryExpensesFragment"
+        android:label="HistoryExpensesFragment"
+        tools:layout="@layout/fragment_history_budget"/>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.ajokos.view.Main.AddExpenseFragment"
+        android:label="AddExpenseFragment"
+        tools:layout="@layout/fragment_add_expense"/>
 </navigation>

@@ -8,10 +8,22 @@
     android:padding="12dp"
     android:paddingBottom="72dp">
 
-    <!-- Judul yang tetap di atas -->
+    <!-- Tombol History -->
+    <ImageButton
+        android:id="@+id/btnHistoryExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/baseline_history_24"
+        android:contentDescription="Lihat History"
+        android:tint="#08454C"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Judul -->
     <TextView
         android:id="@+id/tvExpensesTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Expenses Tracker"
         android:textSize="24sp"
@@ -19,9 +31,10 @@
         android:textColor="#08454C"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@id/btnHistoryExpenses"
+        android:layout_marginEnd="8dp" />
 
-    <!-- RecyclerView untuk list expenses -->
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExpenses"
         android:layout_width="0dp"
@@ -44,4 +57,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

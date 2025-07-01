@@ -1,19 +1,16 @@
 package com.example.ajokos.view.Main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.ajokos.R
 import com.example.ajokos.databinding.FragmentAddEditBudgetBinding
 import com.example.ajokos.model.SessionManager
 import com.example.ajokos.model.data.Budget
-import com.example.ajokos.model.data.User
 import com.example.ajokos.viewmodel.BudgetViewModel
 import com.example.ajokos.viewmodel.UserViewModel
 
@@ -40,6 +37,9 @@ class AddBudgetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[BudgetViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        val currentDate = java.util.Calendar.getInstance()
+        val currentMonth = currentDate.get(java.util.Calendar.MONTH) + 1 // +1 karena Januari = 0
+        val currentYear = currentDate.get(java.util.Calendar.YEAR)
 
         userViewModel.loggedInUserId.observe(viewLifecycleOwner) { idUser ->
             loggedInUserId = idUser
@@ -64,7 +64,9 @@ class AddBudgetFragment : Fragment() {
                     budget = budget,
                     budgetLeft = budgetLeft!!,
                     budgetSpend = 0,
-                    userId = userId
+                    userId = userId,
+                    month = currentMonth,
+                    year = currentYear
                 )
                 viewModel.addBudget(budgetEntity)
                 Toast.makeText(requireContext(), "Data added", Toast.LENGTH_LONG).show()

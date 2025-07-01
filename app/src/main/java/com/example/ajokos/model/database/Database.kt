@@ -7,8 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.ajokos.model.dao.*
 import com.example.ajokos.model.data.*
 import com.example.todoapp.util.MIGRATION_1_2
+import com.example.todoapp.util.MIGRATION_2_3
 
-@Database(entities = [User::class, Budget::class, Expenses::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, Budget::class, Expenses::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun budgetDao(): BudgetDao
@@ -24,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "ajokos_database"
-                ).addMigrations(MIGRATION_1_2).build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
                 INSTANCE = instance
                 instance
             }

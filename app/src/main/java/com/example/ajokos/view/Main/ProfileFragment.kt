@@ -38,7 +38,6 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
         binding.viewModel = userViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -90,6 +89,7 @@ class ProfileFragment : Fragment() {
             binding.tvLastName.setText(it.lname)
         })
     }
+
 
     companion object {
 
