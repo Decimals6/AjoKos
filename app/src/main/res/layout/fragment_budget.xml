@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Budget still empty."
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/tvBudgetTitle"

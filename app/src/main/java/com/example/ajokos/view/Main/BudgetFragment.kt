@@ -18,12 +18,19 @@ import com.example.ajokos.model.SessionManager
 import com.example.ajokos.view.Main.BudgetFragmentDirections
 import com.example.ajokos.viewmodel.BudgetViewModel
 import com.example.ajokos.viewmodel.UserViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class BudgetFragment : Fragment() {
     private lateinit var binding : FragmentBudgetBinding
     private lateinit var userViewModel: UserViewModel
     private lateinit var viewModel: BudgetViewModel
     private val budgetListAdapter = BudgetAdapter(arrayListOf(), readonlyMode = false)
+
+
+    val currentDate = java.util.Calendar.getInstance()
+    val formatter = SimpleDateFormat("MMMM", Locale("in", "ID"))
+    val currentMonth = formatter.format(currentDate.time)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +84,7 @@ class BudgetFragment : Fragment() {
             if(it.isEmpty()) {
                 binding.recviewBudget?.visibility = View.GONE
                 binding.txtError.visibility = View.VISIBLE
-                binding.txtError.setText("Your Budget still empty.")
+                binding.txtError.setText("Welcome to $currentMonth, \nready to plan your budget this month?")
             } else {
                 binding.recviewBudget?.visibility = View.VISIBLE
                 binding.txtError.visibility = View.GONE
