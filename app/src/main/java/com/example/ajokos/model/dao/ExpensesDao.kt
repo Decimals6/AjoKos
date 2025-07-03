@@ -23,7 +23,7 @@ interface ExpensesDao {
     @Query("SELECT * FROM Expenses WHERE budgetId = :budgetId ORDER BY date DESC")
     fun getExpensesWithBudgetByBudget(budgetId: Int): List<ExpensesWithBudget>
 
-    // ✅ GANTI: getExpensesThisMonth pakai timestamp range
+    // getExpensesThisMonth pakai timestamp range
     @Transaction
     @Query("""
         SELECT * FROM Expenses 

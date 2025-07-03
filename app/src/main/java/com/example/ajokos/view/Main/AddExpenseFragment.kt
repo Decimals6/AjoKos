@@ -43,6 +43,7 @@ class AddExpenseFragment : Fragment() {
         binding = FragmentAddExpenseBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,26 +61,30 @@ class AddExpenseFragment : Fragment() {
         updateDateField()
         binding.etExpenseDate.setOnClickListener {
             val now = selectedDate
-            DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-                selectedDate.set(year, month, dayOfMonth)
-                updateDateField()
-                loadBudgetsForSelectedDate()
-            },
+            DatePickerDialog(
+                requireContext(), { _, year, month, dayOfMonth ->
+                    selectedDate.set(year, month, dayOfMonth)
+                    updateDateField()
+                    loadBudgetsForSelectedDate()
+                },
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
     }
+
     private fun updateDateField() {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale("id"))
         binding.etExpenseDate.setText(sdf.format(selectedDate.time))
     }
+
     private fun loadBudgetsForSelectedDate() {
         val month = selectedDate.get(Calendar.MONTH) + 1
         val year = selectedDate.get(Calendar.YEAR)
         budgetViewModel.getBudgetsByMonth(userId, month)
     }
+
     private fun observeBudgetList() {
         budgetViewModel.budgetLD.observe(viewLifecycleOwner) { list ->
             budgetList = list
@@ -90,23 +95,30 @@ class AddExpenseFragment : Fragment() {
             )
             binding.spinnerBudgetOptions.adapter = adapter
 
-            binding.spinnerBudgetOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                    selectedBudget = budgetList.getOrNull(position)
-                    updateBudgetProgress()
-                }
+            binding.spinnerBudgetOptions.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        selectedBudget = budgetList.getOrNull(position)
+                        updateBudgetProgress()
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    selectedBudget = null
-                    updateBudgetProgress()
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        selectedBudget = null
+                        updateBudgetProgress()
+                    }
                 }
-            }
 
             // Set default
             selectedBudget = budgetList.firstOrNull()
             updateBudgetProgress()
         }
     }
+
     private fun updateBudgetProgress() {
         selectedBudget?.let { budget ->
             binding.txtActualBudget.text = "Budget: ${budget.budget}"
@@ -124,19 +136,22 @@ class AddExpenseFragment : Fragment() {
             val note = binding.etExpenseNote.text.toString()
 
             if (nominalStr.isEmpty()) {
-                Toast.makeText(requireContext(), "Nominal tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Nominal tidak boleh kosong", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
             val nominal = nominalStr.toInt()
             val budget = selectedBudget
             if (budget == null) {
-                Toast.makeText(requireContext(), "Pilih budget terlebih dahulu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Pilih budget terlebih dahulu", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
             if (nominal > budget.budgetLeft) {
-                Toast.makeText(requireContext(), "Nominal melebihi sisa budget", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Nominal melebihi sisa budget", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -150,19 +165,11 @@ class AddExpenseFragment : Fragment() {
 
             expensesViewModel.addExpenseAndUpdateBudget(expense, budget)
 
-            Toast.makeText(requireContext(), "Pengeluaran berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pengeluaran berhasil ditambahkan", Toast.LENGTH_SHORT)
+                .show()
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddExpenseFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

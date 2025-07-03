@@ -67,15 +67,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application), C
             selectedUser.postValue(db.userDao().getUserById(id))
         }
     }
-    fun changePassword(newpass: String, vid: Int){
-        launch {
-            val db = AppDatabase.getDatabase(getApplication())
-            db.userDao().changePassword(newpass, vid)
-            paswordChangeMes.postValue("Ganti Password Berhasil")
-        }
-    }
-
-
 
     fun login(username: String, password: String) {
         launch() {

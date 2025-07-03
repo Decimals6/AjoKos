@@ -77,13 +77,4 @@ class AddBudgetFragment : Fragment() {
             Navigation.findNavController(it).popBackStack()
         }
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddBudgetFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

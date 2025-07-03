@@ -6,6 +6,7 @@ import com.example.ajokos.model.data.Budget
 
 @Dao
 interface BudgetDao {
+    
     @Insert
     fun insert(budget: Budget)
 

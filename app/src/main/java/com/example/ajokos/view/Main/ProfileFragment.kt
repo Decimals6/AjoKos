@@ -52,34 +52,6 @@ class ProfileFragment : Fragment() {
         userViewModel.getUserData(userId)
         observeViewModel()
 
-//        binding.btnLogout.setOnClickListener {
-//            sessionManager.logout()
-//
-//            val intent = Intent(requireActivity(), LoginActivity::class.java)
-//            startActivity(intent)
-//            requireActivity().finish()
-//        }
-
-
-//        binding.btnChangePassword.setOnClickListener {
-//            val oldPass = binding.txtOldPassword.text.toString()
-//            val newpass = binding.txtNewPassword.text.toString()
-//            val confirmpass = binding.txtConfirmPassword.text.toString()
-////            Toast.makeText(requireContext(), "passlama: " + user.password, Toast.LENGTH_LONG).show()
-//            if (oldPass == user.password){
-//                if (newpass == confirmpass){
-//                    userViewModel.changePassword(newpass, user.id)
-//                    userViewModel.paswordChangeMes.observe(viewLifecycleOwner, Observer {
-//                        val message = it
-//                        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-//                    })
-//                } else {
-//                    Toast.makeText(requireContext(), "Password tidak sama", Toast.LENGTH_LONG).show()
-//                }
-//            } else {
-//                Toast.makeText(requireContext(), "Password tidak sesuai", Toast.LENGTH_LONG).show()
-//            }
-//        }
     }
 
     fun observeViewModel(){
@@ -89,14 +61,4 @@ class ProfileFragment : Fragment() {
         })
     }
 
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

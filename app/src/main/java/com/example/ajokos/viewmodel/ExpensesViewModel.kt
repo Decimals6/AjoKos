@@ -22,7 +22,7 @@ class ExpensesViewModel(application: Application) : AndroidViewModel(application
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    // ✅ Fungsi hitung timestamp awal dan akhir bulan sekarang
+    // Fungsi hitung timestamp awal dan akhir bulan sekarang
     private fun getThisMonthRange(): Pair<Long, Long> {
         val cal = Calendar.getInstance()
 
@@ -47,7 +47,7 @@ class ExpensesViewModel(application: Application) : AndroidViewModel(application
         return Pair(startOfMonth, endOfMonth)
     }
 
-    // ✅ GANTI ke versi timestamp
+    // GANTI ke versi timestamp
     fun getExpensesThisMonth(userId: Int) {
         launch {
             val (start, end) = getThisMonthRange()
@@ -67,20 +67,6 @@ class ExpensesViewModel(application: Application) : AndroidViewModel(application
         launch {
             val result = expensesDao.getAvailableMonths(userId)
             availableMonthsLD.postValue(result)
-        }
-    }
-
-    fun addExpense(expense: Expenses) {
-        launch {
-            expensesDao.insert(expense)
-            getExpensesThisMonth(expense.userId)
-        }
-    }
-
-    fun deleteExpense(expense: Expenses) {
-        launch {
-            expensesDao.delete(expense)
-            getExpensesThisMonth(expense.userId)
         }
     }
 

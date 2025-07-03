@@ -26,18 +26,6 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    fun getBudget(userId: Int) {
-        loadingLD.value = true
-        budgetLoadErrorLD.value = false
-        launch {
-            val db = AppDatabase.getDatabase(
-                getApplication()
-            )
-
-            budgetLD.postValue(db.budgetDao().getAllBudgets(userId))
-            loadingLD.postValue(false)
-        }
-    }
 
     fun getCurrentMonthYear(): Pair<Int, Int> {
         val cal = Calendar.getInstance()
