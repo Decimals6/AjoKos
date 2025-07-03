@@ -86,12 +86,4 @@ class EditBudgetFragment : Fragment() {
             binding.txtBudgetAmount.setText(it.budget.toString())
         })
     }
-
-    companion object {
-        fun newInstance(param1: String, param2: String) =
-            EditBudgetFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

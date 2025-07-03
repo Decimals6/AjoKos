@@ -14,6 +14,7 @@ import com.example.ajokos.databinding.FragmentSignUpBinding
 import com.example.ajokos.model.data.User
 import com.example.ajokos.model.database.AppDatabase
 import com.example.ajokos.viewmodel.UserViewModel
+import java.security.MessageDigest
 
 
 class SignUpFragment : Fragment() {
@@ -46,11 +47,13 @@ class SignUpFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val hashedPassword = hashPassword(password)
+
             val user = User(
                 fname = fname,
                 lname = lname,
                 username = username,
-                password = password,
+                password = hashedPassword,
                 name = "$fname $lname"
             )
 
@@ -72,6 +75,11 @@ class SignUpFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    private fun hashPassword(password: String): String {
+        val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
     }
 
     override fun onDestroyView() {

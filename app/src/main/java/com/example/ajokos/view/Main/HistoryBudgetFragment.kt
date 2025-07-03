@@ -108,14 +108,4 @@ class HistoryBudgetFragment : Fragment() {
             else -> "Bulan Tidak Valid"
         }
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryBudgetFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 }

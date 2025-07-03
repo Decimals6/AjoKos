@@ -27,7 +27,6 @@ class BudgetFragment : Fragment() {
     private lateinit var viewModel: BudgetViewModel
     private val budgetListAdapter = BudgetAdapter(arrayListOf(), readonlyMode = false)
 
-
     val currentDate = java.util.Calendar.getInstance()
     val formatter = SimpleDateFormat("MMMM", Locale("in", "ID"))
     val currentMonth = formatter.format(currentDate.time)
@@ -90,14 +89,5 @@ class BudgetFragment : Fragment() {
                 binding.txtError.visibility = View.GONE
             }
         })
-    }
-
-    companion object {
-
-        fun newInstance(param1: String, param2: String) =
-            BudgetFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

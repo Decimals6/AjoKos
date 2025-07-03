@@ -68,14 +68,4 @@ class ExpenseFragment : Fragment() {
             expensesAdapter.updateExpensesList(it)
         }
     }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExpenseFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

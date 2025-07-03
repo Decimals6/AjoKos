@@ -118,5 +118,4 @@ class HistoryExpensesFragment : Fragment() {
         return "${monthName.replaceFirstChar { it.uppercase() }} $year"
     }
 
-
 }

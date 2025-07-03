@@ -19,8 +19,6 @@ class BudgetViewModel(application: Application) : AndroidViewModel(application),
     val budgetLD = MutableLiveData<List<Budget>>()
     val selectedBudget = MutableLiveData<Budget>()
     val availableMonthsLD = MutableLiveData<List<Int>>()
-    val budgetLoadErrorLD = MutableLiveData<Boolean>()
-    val loadingLD = MutableLiveData<Boolean>()
     private var job = Job()
 
     override val coroutineContext: CoroutineContext

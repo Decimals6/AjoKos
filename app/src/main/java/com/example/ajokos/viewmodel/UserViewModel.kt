@@ -68,9 +68,15 @@ class UserViewModel(application: Application) : AndroidViewModel(application), C
         }
     }
 
+    private fun hashPassword(password: String): String {
+        val bytes = java.security.MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
+
     fun login(username: String, password: String) {
         launch() {
-            val user = userDao.login(username, password)
+            val hashedPassword = hashPassword(password)
+            val user = userDao.login(username, hashedPassword)
             if (user != null) {
                 _loggedInUserId.postValue(user.id)
                 _loginResult.postValue("Login berhasil")
